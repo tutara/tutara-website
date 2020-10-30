@@ -1,6 +1,5 @@
 textarea {
-	width: 100%;
-	display: block;
+	display: inline-block;
 	border: 1px solid #cfd4db;
 	border-radius: 4px;
 	color: #4e6e8e;
@@ -9,6 +8,7 @@ textarea {
 	outline: none;
 	transition: border-color .2s ease;
 	resize: none;
+	box-sizing: border-box;
 
 	&:focus {
 		border-color: #3eaf7c;
@@ -27,6 +27,7 @@ button {
 	transition: background-color 0.1s ease;
 	box-sizing: border-box;
 	border: none;
+	font-family: inherit;
 
 	&:hover {
 		background-color: #4abf8a;

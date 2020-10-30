@@ -1,5 +1,10 @@
 @import './forms';
+@import './fonts';
 
 .home .hero img {
 	width: 450px !important;
+}
+
+.layout-wide .page .content__default {
+	max-width: unset;
 }
