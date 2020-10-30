@@ -1,0 +1,52 @@
+name: vuepress
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches: 
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Build using vuepress
+        run: yarn run build
+      - name: Upload static site
+        uses: actions/upload-artifact@v2
+        with:
+          name: Static site
+          path: ./src/.vuepress/dist/
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    if: success() && github.ref == 'refs/heads/master'
+    steps:
+      - name: Download static site
+        uses: actions/download-artifact@v2
+        with:
+          name: Static site
+          path: www
+      - name: Clone tutara.github.io repository
+        uses: actions/checkout@v2
+        with:
+          repository: tutara/tutara.github.io
+          ref: tutara.dev
+          path: tutara.github.io
+          token: ${{ secrets.GH_BOT_TOKEN }}
+      - name: Sync changes
+        run: rsync -avh --delete --filter='P tutara-wasm/*' ./www/ ./tutara.github.io/
+      - name: Commit changes
+        working-directory: tutara.github.io
+        continue-on-error: true
+        run: |
+          git config user.name tutara-bot
+          git config user.email github-bot@tutara.dev
+          git add .
+          git commit -m "Update generated sources." -m "Reference: $GITHUB_REPOSITORY@$GITHUB_SHA"
+          git push
