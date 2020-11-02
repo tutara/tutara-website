@@ -81,7 +81,7 @@
 <script>
 const PACKAGE = 'https://tutara.dev/wasm/pkg/tutara_wasm.js';
 const SAMPLE = `
-fun add(a: Int, b: Int): Int {
+fun: Int add(a: Int, b: Int) {
 	return a + b
 }
 
@@ -114,12 +114,8 @@ export default {
 		},
 
 		async run() {
-			const tokens = this.api.get_tokens(this.source).tokens;
-
-			// Needed for JSON.stringify function
-			const localTokens = tokens.map(({ token_type, literal, line, column, length }) => ({ token_type, literal, line, column, length }));
-
-			this.output = JSON.stringify(localTokens, null, '    ');
+			const tokens = this.api.from_source(this.source).get_tokens();
+			this.output = JSON.stringify(tokens, null, '    ');
 		}
 	}
 };
