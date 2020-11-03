@@ -15,10 +15,25 @@ module.exports = {
 
 		nav: [
 			{
+				text: 'Syntax',
+				link: '/syntax/'
+			},
+			{
 				text: 'Try it out',
 				link: '/try'
 			},
-		]
+		],
+
+		displayAllHeaders: true,
+		sidebar: {
+			'/syntax/': [
+				'',
+				'primitives',
+				'variables',
+				'operators',
+				'functions',
+			]
+		}
 	},
 	plugins: [
 		'@vuepress/plugin-back-to-top',
