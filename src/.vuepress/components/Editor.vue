@@ -15,7 +15,14 @@
 						Enter your code in this editor and click "Run script" to get started.<br />
 						Or <a @click="sample">start with a sample script</a>.
 					</div>
-					<textarea v-model="source"></textarea>
+					<PrismEditor
+						class="code"
+						v-model="source"
+						:highlight="highlight"
+						:insertSpaces="false"
+						:tabSize="1"
+						line-numbers
+					></PrismEditor>
 					<button type="submit">Run script</button>
 				</form>
 				<div v-show="tab == 'tokens'" class="tab">
@@ -111,14 +118,11 @@
 						}
 					}
 
-					textarea {
-						width: 100%;
+					.code {
 						height: 100%;
-						min-height: 25vh;
-						background: transparent;
-						border: none;
-						color: inherit;
-						padding: 8px;
+						font-size: 14px;
+						line-height: 1.5;
+						padding: 0;
 					}
 
 					button {
@@ -157,6 +161,41 @@
 			}
 		}
 	}
+}
+
+.code /deep/ .token {
+	&.Integer { color: rgb(94,129,172); }
+	&.String { color: rgb(163,190,140); }
+	&.True { color: rgb(208,135,1); }
+	&.False { color: rgb(208,135,1); }
+	&.Val { color: rgb(208,135,1); }
+	&.Var { color: rgb(208,135,1); }
+	&.Identifier { color: rgb(235,203,1); }
+	&.Plus { color: rgb(180,142,173); }
+	&.Minus { color: rgb(180,142,173); }
+	&.Multiply { color: rgb(180,142,173); }
+	&.Division { color: rgb(180,142,173); }
+	&.Pow { color: rgb(180,142,173); }
+	&.Modulo { color: rgb(180,142,173); }
+	&.Function { color: rgb(208,135,1); }
+	&.Return { color: rgb(208,135,1); }
+	&.Separator { color: rgb(236,239,244); }
+	&.OpenParenthesis { color: rgb(143,188,187); }
+	&.CloseParenthesis { color: rgb(143,188,187); }
+	&.OpenCurlyBracket { color: rgb(143,188,187); }
+	&.CloseCurlyBracket { color: rgb(143,188,187); }
+	&.Assign { color: rgb(236,239,244); }
+	&.AssignPlus { color: rgb(236,239,244); }
+	&.AssignMinus { color: rgb(236,239,244); }
+	&.AssignMultiply { color: rgb(236,239,244); }
+	&.AssignDivision { color: rgb(236,239,244); }
+	&.AssignPow { color: rgb(236,239,244); }
+	&.AssignModulo { color: rgb(236,239,244); }
+	&.Specifier { color: rgb(236,239,244); }
+	&.Comment { color: rgb(216,222,233); }
+	&.Dot { color: rgb(236,239,244); }
+
+	&.error { color: #FFFFFF; border-bottom: 1px #ff0000 dashed }
 }
 </style>
 
@@ -208,7 +247,7 @@ export default {
 			this.run();
 		},
 
-		async run() {
+		run() {
 			const instance = this.api.from_source(this.source);
 
 			try {
@@ -228,6 +267,75 @@ export default {
 				this.statements = null;
 				this.statementsErr = err;
 			}
+		},
+
+		escape(html) {
+			return html.replace(/[\x26\x0A\<>'"]/g, (r) => `&#${r.charCodeAt(0)};`);
+		},
+
+		highlight(code) {
+			const instance = this.api.from_source(this.source);
+
+			try {
+				const tokens = instance.get_tokens();
+				return this.highlight_tokens(code, tokens);
+			} catch (err) {
+				console.error(err);
+
+				if (err.type.Lexical) {
+					let [lineNum, column, length] = err.type.Lexical;
+					lineNum--;
+
+					return code.split(/\n/).map((line, index) => {
+						if (index == lineNum) {
+							return [
+								this.escape(line.substr(0, column)),
+								`<span class="token error">${this.escape(line.substr(column, length))}</span>`,
+								this.escape(line.substr(column + length))
+							].join('');
+						}
+
+						return this.escape(line);
+					}).join('<br />');
+				}
+
+				return this.escape(code);
+			}
+		},
+
+		highlight_tokens(code, tokens) {
+			const lines = code.split(/\n/);
+			let highlightedCode = '';
+			let lineNum = 0;
+			let tokenNum = 0;
+			let columnNum = 0;
+
+			while (true) {
+				if (tokens.length == 0) break;
+
+				const token = tokens[tokenNum];
+
+				while (token.line - 1 > lineNum) {
+					lineNum++;
+					columnNum = 0;
+					highlightedCode += '<br />';
+				}
+
+				const line = lines[lineNum];
+
+				highlightedCode += line.substr(columnNum, token.column - columnNum);
+				columnNum = token.column + token.length;
+
+				let tokenValue = this.escape(line.substr(token.column, token.length));
+				highlightedCode += `<span class="token ${token.type}">${tokenValue}</span>`;
+
+				tokenNum++;
+				if (tokenNum >= tokens.length) break;
+			}
+
+			highlightedCode += '<br />&nbsp;'.repeat(lines.length - lineNum);
+
+			return highlightedCode;
 		}
 	}
 };
