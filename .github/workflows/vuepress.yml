@@ -52,7 +52,6 @@ jobs:
           path: tutara.github.io
           token: ${{ secrets.GH_BOT_TOKEN }}
       - name: Sync change
-      s
         run: rsync -avh --delete -f 'P .git/*' -f 'P CNAME' -f 'P wasm/*' www/ tutara.github.io/
       - name: Commit changes
         working-directory: tutara.github.io
