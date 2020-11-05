@@ -42,6 +42,10 @@ module.exports = {
 				link: '/syntax/'
 			},
 			{
+				text: 'Samples',
+				link: '/samples'
+			},
+			{
 				text: 'Try it out',
 				link: '/try'
 			},
