@@ -13,15 +13,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          path: tutara-website
+      - name: Clone tutara-syntax repository
+        uses: actions/checkout@v2
+        with:
+          repository: tutara/tutara-syntax
+          path: tutara-syntax
+          token: ${{ secrets.GH_BOT_TOKEN }}
       - name: Install dependencies
         run: yarn install --frozen-lockfile
+        working-directory: tutara-website
+      - name: Copy syntax sources
+        run: mv -f tutara-syntax/docs/ tutara-website/src/syntax/
       - name: Build using vuepress
         run: yarn run build
+        working-directory: tutara-website
       - name: Upload static site
         uses: actions/upload-artifact@v2
         with:
           name: Static site
-          path: ./src/.vuepress/dist/
+          path: tutara-website/src/.vuepress/dist/
   deploy:
     runs-on: ubuntu-latest
     needs: build
@@ -39,8 +51,9 @@ jobs:
           ref: tutara.dev
           path: tutara.github.io
           token: ${{ secrets.GH_BOT_TOKEN }}
-      - name: Sync changes
-        run: rsync -avh --delete -f 'P .git/*' -f 'P CNAME' -f 'P wasm/*' ./www/ ./tutara.github.io/
+      - name: Sync change
+      s
+        run: rsync -avh --delete -f 'P .git/*' -f 'P CNAME' -f 'P wasm/*' www/ tutara.github.io/
       - name: Commit changes
         working-directory: tutara.github.io
         continue-on-error: true
