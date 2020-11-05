@@ -30,7 +30,7 @@ module.exports = {
 
 		docsRepo: 'tutara/tutara-website',
 		docsDir: 'src',
-		editLinks: true,
+		editLinks: false,
 		editLinkText: 'Edit this page',
 		lastUpdated: true,
 
