@@ -164,36 +164,53 @@
 }
 
 .code /deep/ .token {
-	&.Integer { color: rgb(94,129,172); }
-	&.String { color: rgb(163,190,140); }
-	&.True { color: rgb(208,135,1); }
-	&.False { color: rgb(208,135,1); }
-	&.Val { color: rgb(208,135,1); }
-	&.Var { color: rgb(208,135,1); }
-	&.Identifier { color: rgb(235,203,1); }
-	&.Plus { color: rgb(180,142,173); }
-	&.Minus { color: rgb(180,142,173); }
-	&.Multiply { color: rgb(180,142,173); }
-	&.Division { color: rgb(180,142,173); }
-	&.Pow { color: rgb(180,142,173); }
-	&.Modulo { color: rgb(180,142,173); }
-	&.Function { color: rgb(208,135,1); }
-	&.Return { color: rgb(208,135,1); }
-	&.Separator { color: rgb(236,239,244); }
-	&.OpenParenthesis { color: rgb(143,188,187); }
-	&.CloseParenthesis { color: rgb(143,188,187); }
-	&.OpenCurlyBracket { color: rgb(143,188,187); }
-	&.CloseCurlyBracket { color: rgb(143,188,187); }
-	&.Assign { color: rgb(236,239,244); }
-	&.AssignPlus { color: rgb(236,239,244); }
-	&.AssignMinus { color: rgb(236,239,244); }
-	&.AssignMultiply { color: rgb(236,239,244); }
-	&.AssignDivision { color: rgb(236,239,244); }
-	&.AssignPow { color: rgb(236,239,244); }
-	&.AssignModulo { color: rgb(236,239,244); }
-	&.Specifier { color: rgb(236,239,244); }
-	&.Comment { color: rgb(216,222,233); }
-	&.Dot { color: rgb(236,239,244); }
+	&.Integer { color: rgb(94, 129, 172); }
+	&.String { color: rgb(163, 190, 140); }
+	&.Boolean { color: rgb(208, 135, 1); }
+	&.Val { color: rgb(208, 135, 1); }
+	&.Var { color: rgb(208, 135, 1); }
+	&.Identifier { color: rgb(235, 203, 1); }
+	&.Plus { color: rgb(180, 142, 173); }
+	&.Minus { color: rgb(180, 142, 173); }
+	&.Multiply { color: rgb(180, 142, 173); }
+	&.Division { color: rgb(180, 142, 173); }
+	&.Exponentiation { color: rgb(180, 142, 173); }
+	&.Modulo { color: rgb(180, 142, 173); }
+	&.Not { color: rgb(180, 142, 173); }
+	&.Equal { color: rgb(180, 142, 173); }
+	&.NotEqual { color: rgb(180, 142, 173); }
+	&.Greater { color: rgb(180, 142, 173); }
+	&.Lesser { color: rgb(180, 142, 173); }
+	&.GreaterOrEqual { color: rgb(180, 142, 173); }
+	&.LesserOrEqual { color: rgb(180, 142, 173); }
+	&.And { color: rgb(180, 142, 173); }
+	&.Or { color: rgb(180, 142, 173); }
+	&.If { color: rgb(208, 135, 1); }
+	&.Else { color: rgb(208, 135, 1); }
+	&.Match { color: rgb(208, 135, 1); }
+	&.Function { color: rgb(208, 135, 1); }
+	&.Return { color: rgb(208, 135, 1); }
+	&.Separator { color: rgb(236, 239, 244); }
+	&.Loop { color: rgb(180, 142, 173); }
+	&.While { color: rgb(180, 142, 173); }
+	&.For { color: rgb(180, 142, 173); }
+	&.Break { color: rgb(180, 142, 173); }
+	&.In { color: rgb(180, 142, 173); }
+	&.OpenParenthesis { color: rgb(143, 188, 187); }
+	&.CloseParenthesis { color: rgb(143, 188, 187); }
+	&.OpenCurlyBracket { color: rgb(143, 188, 187); }
+	&.CloseCurlyBracket { color: rgb(143, 188, 187); }
+	&.Assign { color: rgb(236, 239, 244); }
+	&.AssignPlus { color: rgb(236, 239, 244); }
+	&.AssignMinus { color: rgb(236, 239, 244); }
+	&.AssignMultiply { color: rgb(236, 239, 244); }
+	&.AssignDivision { color: rgb(236, 239, 244); }
+	&.AssignExponentiation { color: rgb(236, 239, 244); }
+	&.AssignModulo { color: rgb(236, 239, 244); }
+	&.Specifier { color: rgb(236, 239, 244); }
+	&.Comment { color: rgb(216, 222, 233); }
+	&.Dot { color: rgb(236, 239, 244); }
+	&.Arrow { color: rgb(236, 239, 244); }
 
 	&.error { color: #FFFFFF; border-bottom: 1px #ff0000 dashed }
 }
