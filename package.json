@@ -9,7 +9,7 @@
 	"devDependencies": {
 		"node-sass": "^4.14.1",
 		"sass-loader": "^10.0.4",
-		"vuepress": "^1.5.3"
+		"vuepress": "^2.0.0-alpha.5"
 	},
 	"dependencies": {
 		"vue-prism-editor": "^1.2.2"
