@@ -195,6 +195,7 @@
 	&.While { color: rgb(180, 142, 173); }
 	&.For { color: rgb(180, 142, 173); }
 	&.Break { color: rgb(180, 142, 173); }
+	&.Continue { color: rgb(180, 142, 173); }
 	&.In { color: rgb(180, 142, 173); }
 	&.OpenParenthesis { color: rgb(143, 188, 187); }
 	&.CloseParenthesis { color: rgb(143, 188, 187); }
