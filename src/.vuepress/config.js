@@ -50,6 +50,10 @@ module.exports = {
 				link: '/samples'
 			},
 			{
+				text: 'Design',
+				link: '/design-philosophy'
+			},
+			{
 				text: 'Try it out',
 				link: '/try'
 			},
